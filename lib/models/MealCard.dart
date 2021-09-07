@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../test/widget_test.dart';
+
 import '../consts.dart';
+import '../test/widget_test.dart';
 
 class MealCard extends StatefulWidget {
   final int index;
@@ -41,11 +42,13 @@ class _MealCardState extends State<MealCard>
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: widget.index.isOdd ? 50 : 20),
+      margin: EdgeInsets.only(
+          top: widget.index.isOdd ? 50 : 20,
+          bottom: widget.index.isOdd ? 10 : 30),
       height: 100,
       width: 100,
       decoration: BoxDecoration(
-        gradient: boxLinearGradient,
+        gradient: boxLinearGradientLite,
         boxShadow: [
           BoxShadow(
               color: Colors.white12.withOpacity(0.1),

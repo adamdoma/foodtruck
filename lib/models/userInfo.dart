@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import '../consts.dart';
+import '../controllers/home_controller.dart';
 
 class UserInfo extends StatefulWidget {
   const UserInfo({Key? key}) : super(key: key);
@@ -12,11 +15,20 @@ class _UserInfoState extends State<UserInfo>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   bool pressed = false;
+  final controller = HomeController();
 
   void HandlePress() {
     setState(() {
       pressed = !pressed;
-      pressed ? _animationController.forward() : _animationController.reverse();
+      if (pressed == true) {
+        _animationController.forward();
+        Provider.of<HomeController>(context, listen: false)
+            .changeHomeState(HomeState.info);
+      } else {
+        _animationController.reverse();
+        Provider.of<HomeController>(context, listen: false)
+            .changeHomeState(HomeState.normal);
+      }
     });
   }
 
@@ -35,7 +47,9 @@ class _UserInfoState extends State<UserInfo>
     Size size = MediaQuery.of(context).size;
     return Container(
       width: size.width,
-      height: 85,
+      height: Provider.of<HomeController>(context).homeState == HomeState.info
+          ? info + 500
+          : info,
       decoration: BoxDecoration(
         gradient: boxLinearGradient,
         borderRadius: BorderRadius.circular(20),
