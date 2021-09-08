@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 
 final Color textColor = Colors.white.withOpacity(0.6);
 
-double info = 80;
-double cart = 40;
-
 final LinearGradient boxLinearGradient = LinearGradient(colors: [
   Colors.deepPurpleAccent.withOpacity(0.2),
   Colors.deepPurpleAccent.withOpacity(0.22),

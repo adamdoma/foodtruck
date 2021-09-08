@@ -13,9 +13,9 @@ class UserInfo extends StatefulWidget {
 
 class _UserInfoState extends State<UserInfo>
     with SingleTickerProviderStateMixin {
+  HomeController homeController = HomeController();
   late AnimationController _animationController;
   bool pressed = false;
-  final controller = HomeController();
 
   void HandlePress() {
     setState(() {
@@ -45,38 +45,59 @@ class _UserInfoState extends State<UserInfo>
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Container(
-      width: size.width,
-      height: Provider.of<HomeController>(context).homeState == HomeState.info
-          ? info + 500
-          : info,
-      decoration: BoxDecoration(
-        gradient: boxLinearGradient,
-        borderRadius: BorderRadius.circular(20),
+    return AnimatedContainer(
+        duration: Duration(milliseconds: 600),
+        width: size.width,
+        height: Provider.of<HomeController>(context).homeState == HomeState.info
+            ? size.height - 100
+            : Provider.of<HomeController>(context).getUserInfoBar(),
+        decoration: BoxDecoration(
+          gradient: boxLinearGradient,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child:
+            Provider.of<HomeController>(context).homeState == HomeState.normal
+                ? infoBarClosed()
+                : infoBarOpen());
+  }
+
+  ListTile infoBarClosed() {
+    return ListTile(
+      title: Text(
+        'Adam',
+        style: TextStyle(
+            fontSize: 50, color: textColor, fontWeight: FontWeight.w700),
       ),
-      child: Center(
-        child: ListTile(
-          title: Text(
-            'Adam',
-            style: TextStyle(
-                fontSize: 50, color: textColor, fontWeight: FontWeight.w700),
-          ),
-          dense: false,
-          leading: Icon(
-            Icons.account_circle_outlined,
-            color: textColor,
-            size: 50,
-          ),
-          trailing: IconButton(
-            iconSize: 50,
-            icon: AnimatedIcon(
-              icon: AnimatedIcons.menu_home,
-              progress: _animationController,
-              color: textColor,
-            ),
-            onPressed: HandlePress,
-          ),
-          subtitle: Text('blabla'),
+      dense: false,
+      leading: Icon(
+        Icons.account_circle_outlined,
+        color: textColor,
+        size: 50,
+      ),
+      trailing: IconButton(
+        iconSize: 50,
+        icon: AnimatedIcon(
+          icon: AnimatedIcons.menu_home,
+          progress: _animationController,
+          color: textColor,
+        ),
+        onPressed: HandlePress,
+      ),
+    );
+  }
+
+  AnimatedContainer infoBarOpen() {
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 700),
+      child: Flexible(
+        fit: FlexFit.tight,
+        flex: 3,
+        child: Column(
+          children: [
+            infoBarClosed(),
+            Text('this is bar open'),
+            Icon(Icons.info),
+          ],
         ),
       ),
     );
