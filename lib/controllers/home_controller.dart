@@ -4,7 +4,7 @@ enum HomeState { normal, cart, info }
 
 class HomeController extends ChangeNotifier {
   double _userInfoBar = 80;
-  double _cartBar = 40;
+  double _cartBar = 50;
   HomeState homeState = HomeState.normal;
 
   void changeHomeState(HomeState state) {

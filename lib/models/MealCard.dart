@@ -1,57 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:foodtruck/test/widget_test.dart';
 
-import '../consts.dart';
-import '../test/widget_test.dart';
-
-class MealCard extends StatefulWidget {
+class MealCard extends StatelessWidget {
   final int index;
   const MealCard({Key? key, required this.index}) : super(key: key);
-
-  @override
-  _MealCardState createState() => _MealCardState();
-}
-
-class _MealCardState extends State<MealCard>
-    with SingleTickerProviderStateMixin {
-  double animateMove = 100;
-  late AnimationController animationController;
-  Animation? animation;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    animationController = AnimationController(
-        vsync: this,
-        duration: Duration(milliseconds: 600),
-        upperBound: 0,
-        lowerBound: -50);
-
-    animationController.forward();
-    animationController.addListener(() {
-      setState(() {});
-    });
-  }
-
-  @override
-  void dispose() {
-    animationController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(
-          top: widget.index.isOdd ? 50 : 20,
-          bottom: widget.index.isOdd ? 10 : 30),
+          top: index.isOdd ? 50 : 20, bottom: index.isOdd ? 10 : 30),
       height: 100,
       width: 100,
       decoration: BoxDecoration(
-        gradient: boxLinearGradientLite,
+        color: Colors.grey,
+        // gradient: boxLinearGradientLite,
         boxShadow: [
           BoxShadow(
-              color: Colors.white12.withOpacity(0.1),
+              color: Colors.white12.withOpacity(0.5),
               blurRadius: 4,
               offset: Offset(2, 1),
               spreadRadius: 3)
@@ -64,18 +30,28 @@ class _MealCardState extends State<MealCard>
           AnimatedPositioned(
             curve: Curves.easeIn,
             duration: Duration(milliseconds: 500),
-            left: 3,
-            top: -20,
-            right: 5,
-            bottom: 0,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(50),
-              child: FittedBox(
-                fit: BoxFit.contain,
-                child: Container(
-                  height: 80,
-                  width: 100,
-                  child: demoMeals[widget.index],
+            left: 90,
+            top: index.isOdd ? 0 : -10,
+            right: -10,
+            bottom: index.isOdd ? 20 : 20,
+            child: Hero(
+              tag: '${demoMeals[index]}',
+              child: Container(
+                height: 50,
+                width: 50,
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.white,
+                        blurRadius: 20,
+                        offset: Offset(5, 5))
+                  ],
+                  border: Border.all(color: Colors.transparent, width: 2),
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                    fit: BoxFit.fill,
+                    image: AssetImage(demoMeals[index].toString()),
+                  ),
                 ),
               ),
             ),
@@ -83,15 +59,17 @@ class _MealCardState extends State<MealCard>
           Positioned(
             bottom: 1,
             left: 0,
-            right: 0,
+            right: 80,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Text(
-                  "Price:${widget.index + 20}",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                  "Price:${index + 20}",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 30,
+                      color: Colors.white),
                 ),
-                Icon(Icons.add_shopping_cart_outlined)
               ],
             ),
           )

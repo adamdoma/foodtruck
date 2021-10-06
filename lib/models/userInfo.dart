@@ -46,7 +46,7 @@ class _UserInfoState extends State<UserInfo>
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return AnimatedContainer(
-        duration: Duration(milliseconds: 600),
+        duration: Duration(milliseconds: 200),
         width: size.width,
         height: Provider.of<HomeController>(context).homeState == HomeState.info
             ? size.height - 100
@@ -88,15 +88,21 @@ class _UserInfoState extends State<UserInfo>
 
   AnimatedContainer infoBarOpen() {
     return AnimatedContainer(
-      duration: Duration(milliseconds: 700),
-      child: Flexible(
-        fit: FlexFit.tight,
-        flex: 3,
+      duration: Duration(milliseconds: 500),
+      child: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             infoBarClosed(),
-            Text('this is bar open'),
-            Icon(Icons.info),
+            Text(
+              'User name here',
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+            Icon(
+              Icons.info,
+              size: 30,
+              color: Colors.white,
+            ),
           ],
         ),
       ),

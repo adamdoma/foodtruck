@@ -1,12 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import './classes/cart.dart';
 import './controllers/home_controller.dart';
 import './screens/home_screen.dart';
 
+// create: (context) => HomeController(),
 void main() {
-  runApp(ChangeNotifierProvider(
-    create: (context) => HomeController(),
+  runApp(MultiProvider(
+    providers: [
+      // Provider<HomeController>(create: (context) => HomeController()),
+      ChangeNotifierProvider(
+        create: (_) => HomeController(),
+      ),
+      ChangeNotifierProvider(
+        create: (_) => Cart(),
+      ),
+    ],
     child: MyApp(),
   ));
 }
@@ -31,7 +41,7 @@ class MyApp extends StatelessWidget {
           backgroundColor: Colors.black,
           centerTitle: true,
         ),
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.grey.shade500,
         body: SafeArea(child: HomeScreen()),
       ),
     );
