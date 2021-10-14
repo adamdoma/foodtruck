@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodtruck/classes/meal.dart';
 import 'package:foodtruck/test/widget_test.dart';
 import 'package:provider/provider.dart';
 
@@ -32,7 +33,7 @@ class _MealDetailsState extends State<MealDetails> {
             children: [
               Container(
                 child: Hero(
-                  tag: '${demoMeals[widget.meal]}',
+                  tag: _cartTag == "" ? demoMeals[widget.meal] : _cartTag,
                   child: CircleAvatar(
                     radius: 100,
                     backgroundImage: AssetImage(demoMeals[widget.meal]),
@@ -98,11 +99,13 @@ class _MealDetailsState extends State<MealDetails> {
               ElevatedButton(
                 child: Text('Add To Cart'),
                 onPressed: () {
+                  Provider.of<Cart>(context, listen: false).addMeal(new Meal());
+                  Meal meal =
+                      Provider.of<Cart>(context, listen: false).getList().last;
                   setState(() {
-                    _cartTag = "_cartTag";
+                    _cartTag = '${meal.id}';
                   });
-                  Provider.of<Cart>(context, listen: false)
-                      .addMeal(widget.meal);
+
                   Navigator.pop(context);
                 },
               ),

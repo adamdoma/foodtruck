@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 
-class Cart extends ChangeNotifier {
-  List<int> imgList = [];
+import 'meal.dart';
 
-  List getList() {
+class Cart extends ChangeNotifier {
+  List<Meal> imgList = [];
+
+  List<Meal> getList() {
     return this.imgList;
   }
 
-  void addMeal(int img) {
-    imgList.add(img);
+  void addMeal(Meal meal) {
+    imgList.add(meal);
     notifyListeners();
   }
 

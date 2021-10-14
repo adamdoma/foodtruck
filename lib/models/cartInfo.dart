@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodtruck/classes/cart.dart';
+import 'package:foodtruck/classes/meal.dart';
 import 'package:foodtruck/consts.dart';
 import 'package:foodtruck/controllers/home_controller.dart';
 import 'package:foodtruck/test/widget_test.dart';
@@ -17,6 +18,7 @@ class _CartInfoState extends State<CartInfo> {
   bool pressed = false;
   @override
   Widget build(BuildContext context) {
+    List<Meal> list = Provider.of<Cart>(context, listen: true).getList();
     Size size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {
@@ -63,27 +65,32 @@ class _CartInfoState extends State<CartInfo> {
                         color: Colors.red,
                         child: ListView.builder(
                             scrollDirection: Axis.horizontal,
-                            itemCount:
-                                Provider.of<Cart>(context).getList().length,
+                            itemCount: list.length,
                             itemBuilder: (context, index) {
-                              return Container(
-                                margin: EdgeInsets.symmetric(horizontal: 5),
-                                height: 40,
-                                width: 40,
-                                decoration: BoxDecoration(
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: Colors.white,
-                                        blurRadius: 20,
-                                        offset: Offset(5, 5))
-                                  ],
-                                  border: Border.all(
-                                      color: Colors.transparent, width: 2),
-                                  shape: BoxShape.circle,
-                                  image: DecorationImage(
-                                    fit: BoxFit.fill,
-                                    image:
-                                        AssetImage(demoMeals[widget.mealIndex]),
+                              Meal meal = list.last;
+                              print(meal.id);
+                              print(list.length);
+                              return Hero(
+                                tag: '${list[index].id}',
+                                child: Container(
+                                  margin: EdgeInsets.symmetric(horizontal: 5),
+                                  height: 40,
+                                  width: 40,
+                                  decoration: BoxDecoration(
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color: Colors.white,
+                                          blurRadius: 20,
+                                          offset: Offset(5, 5))
+                                    ],
+                                    border: Border.all(
+                                        color: Colors.transparent, width: 2),
+                                    shape: BoxShape.circle,
+                                    image: DecorationImage(
+                                      fit: BoxFit.fill,
+                                      image: AssetImage(
+                                          demoMeals[widget.mealIndex]),
+                                    ),
                                   ),
                                 ),
                               );
