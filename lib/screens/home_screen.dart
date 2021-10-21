@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:foodtruck/controllers/home_controller.dart';
-import 'package:foodtruck/models/main_display.dart';
+import 'package:foodtruck/widgets/main_display.dart';
 import 'package:provider/provider.dart';
 
-import '../models/cartInfo.dart';
-import '../models/userInfo.dart';
+import '../widgets/cartInfo.dart';
+import '../widgets/userInfo.dart';
 
 class HomeScreen extends StatelessWidget {
   @override

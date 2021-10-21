@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import './classes/cart.dart';
+import './controllers/cart_controller.dart';
 import './controllers/home_controller.dart';
 import './screens/home_screen.dart';
 
@@ -14,7 +14,7 @@ void main() {
         create: (_) => HomeController(),
       ),
       ChangeNotifierProvider(
-        create: (_) => Cart(),
+        create: (_) => CartController(),
       ),
     ],
     child: MyApp(),

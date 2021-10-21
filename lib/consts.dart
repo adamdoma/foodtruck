@@ -17,3 +17,17 @@ final LinearGradient boxLinearGradientLite = LinearGradient(colors: [
   Colors.white.withOpacity(0.5),
   Colors.white.withOpacity(0.4),
 ], begin: Alignment.topLeft, end: Alignment.bottomRight);
+
+final boxDecoration = (String imgString) {
+  BoxDecoration(
+    boxShadow: [
+      BoxShadow(color: Colors.white, blurRadius: 20, offset: Offset(5, 5))
+    ],
+    border: Border.all(color: Colors.transparent, width: 2),
+    shape: BoxShape.circle,
+    image: DecorationImage(
+      fit: BoxFit.fill,
+      image: AssetImage(imgString),
+    ),
+  );
+};

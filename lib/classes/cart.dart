@@ -1,18 +1,9 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import '../classes/meal.dart';
 
-import 'meal.dart';
+class Cart {
+  Meal meal;
+  String mealImg;
 
-class Cart extends ChangeNotifier {
-  List<Meal> imgList = [];
-
-  List<Meal> getList() {
-    return this.imgList;
-  }
-
-  void addMeal(Meal meal) {
-    imgList.add(meal);
-    notifyListeners();
-  }
-
-  void deleteMeal(int index) {}
+  Cart({required this.meal, required this.mealImg});
 }

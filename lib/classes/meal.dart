@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 
 class Meal {
   int? id;
-  // List<Addons>? addons;
+  late String name;
+  List<Addons>? addons;
   double? price;
 
   Meal() {
@@ -17,6 +18,21 @@ class Meal {
 }
 
 class Addons {
-  late String name;
-  late bool checked;
+  late String _name;
+  bool _checked = false;
+
+  Addons(String name) {
+    this._name = name;
+  }
+
+  set addonName(String name) {
+    this._name = name;
+  }
+
+  set selected(bool select) {
+    this._checked = select;
+  }
+
+  String get addonName => this._name;
+  bool get addonSelected => this._checked;
 }

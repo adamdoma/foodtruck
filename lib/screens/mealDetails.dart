@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:foodtruck/classes/meal.dart';
+import 'package:foodtruck/controllers/cart_controller.dart';
 import 'package:foodtruck/test/widget_test.dart';
 import 'package:provider/provider.dart';
+import '../classes/burger.dart';
 
 import '../classes/cart.dart';
 
 class MealDetails extends StatefulWidget {
-  int meal;
+  late final int meal;
   MealDetails({required this.meal});
 
   @override
@@ -99,9 +101,14 @@ class _MealDetailsState extends State<MealDetails> {
               ElevatedButton(
                 child: Text('Add To Cart'),
                 onPressed: () {
-                  Provider.of<Cart>(context, listen: false).addMeal(new Meal());
+                  Provider.of<CartController>(context, listen: false).addMeal(
+                    new Cart(meal: new Meal(), mealImg: demoMeals[widget.meal]),
+                  );
                   Meal meal =
-                      Provider.of<Cart>(context, listen: false).getList().last;
+                      Provider.of<CartController>(context, listen: false)
+                          .getList()
+                          .last
+                          .meal;
                   setState(() {
                     _cartTag = '${meal.id}';
                   });

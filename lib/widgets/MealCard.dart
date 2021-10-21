@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:foodtruck/controllers/cart_controller.dart';
 import 'package:foodtruck/test/widget_test.dart';
+import 'package:provider/provider.dart';
 
 class MealCard extends StatelessWidget {
   final int index;
@@ -64,11 +66,13 @@ class MealCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Text(
-                  "Price:${index + 20}",
+                  '${demoMeals[index].toString().substring(13, demoMeals[index].toString().length - 7)}',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 30,
-                      color: Colors.white),
+                      height: 2,
+                      letterSpacing: 3,
+                      fontSize: 40,
+                      color: Colors.black54),
                 ),
               ],
             ),
