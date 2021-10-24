@@ -32,7 +32,7 @@ class MainDisplay extends StatelessWidget {
                 pageBuilder: (context, animation, secondAnimation) =>
                     FadeTransition(
                   opacity: animation,
-                  child: MealDetails(meal: index),
+                  child: MealDetails(mealIndex: index),
                 ),
               ),
             );

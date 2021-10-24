@@ -1,18 +1,20 @@
 import 'dart:math';
 
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
-class Meal {
-  int? id;
+abstract class Meal {
+  late GlobalKey id;
   late String name;
-  List<Addons>? addons;
+  late List<Addons> addons;
   double? price;
 
+  selectionList();
+
   Meal() {
-    id = Random().nextInt(999999999);
+    id = new GlobalKey();
   }
 
-  int? getTagName() {
+  GlobalKey getTagName() {
     return this.id;
   }
 }
