@@ -7,4 +7,10 @@ class HotDog extends Meal {
   selectionList() {
     return _typeOfBread;
   }
+
+  @override
+  subSelection() {
+    // TODO: implement subSelection
+    throw UnimplementedError();
+  }
 }

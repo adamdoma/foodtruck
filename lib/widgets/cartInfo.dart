@@ -42,8 +42,8 @@ class _CartInfoState extends State<CartInfo> {
             });
           },
           child: Container(
-            height: 12,
-            width: 50,
+            height: 40,
+            width: 80,
             margin: EdgeInsets.only(bottom: 5),
             decoration: BoxDecoration(
               color: Colors.greenAccent,
@@ -68,7 +68,7 @@ class _CartInfoState extends State<CartInfo> {
           width: size.width,
           height:
               Provider.of<HomeController>(context).homeState == HomeState.cart
-                  ? size.height - 100
+                  ? size.height - 140
                   : 60,
           child: Container(
             decoration: BoxDecoration(
@@ -100,11 +100,14 @@ class _CartInfoState extends State<CartInfo> {
             width: double.infinity,
             color: Colors.black,
             child: Stack(
+              fit: StackFit.loose,
               children: [
-                Icon(
-                  Icons.shopping_cart_outlined,
-                  size: 50,
-                  color: Colors.white,
+                Center(
+                  child: Icon(
+                    Icons.shopping_cart_outlined,
+                    size: 50,
+                    color: Colors.white,
+                  ),
                 ),
                 Positioned(
                   top: 0,

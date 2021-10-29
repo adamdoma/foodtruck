@@ -10,4 +10,10 @@ class Burger extends Meal {
   selectionList() {
     return _gram;
   }
+
+  @override
+  subSelection() {
+    // TODO: implement subSelection
+    throw UnimplementedError();
+  }
 }

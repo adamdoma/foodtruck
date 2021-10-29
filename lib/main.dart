@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodtruck/controllers/meal_controller.dart';
 import 'package:provider/provider.dart';
 
 import './controllers/cart_controller.dart';
@@ -16,6 +17,7 @@ void main() {
       ChangeNotifierProvider(
         create: (_) => CartController(),
       ),
+      ChangeNotifierProvider(create: (_) => MealController()),
     ],
     child: MyApp(),
   ));

@@ -18,6 +18,8 @@ class MealDetails extends StatefulWidget {
 
 class _MealDetailsState extends State<MealDetails> {
   int tabIndex = 1;
+  int tabIndex2 = 1;
+  double selectingContainer = 40;
   String _cartTag = "";
   late Meal meal;
 
@@ -26,18 +28,25 @@ class _MealDetailsState extends State<MealDetails> {
     setState(() {});
   }
 
+  void secondSelection(int selected) {
+    tabIndex2 = selected;
+    setState(() {});
+  }
+
   Meal getMeal() {
-    MealController _mealController =
-        MealController(type: demoMeals[widget.mealIndex]);
-    _mealController.retrunType();
-    return _mealController.retrunType();
+    MealController _mealController = MealController();
+    return _mealController.returnType(demoMeals[widget.mealIndex]);
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     meal = getMeal();
+    if (meal.runtimeType.toString() == 'Toast') {
+      setState(() {
+        selectingContainer = 90;
+      });
+    }
   }
 
   @override
@@ -62,42 +71,77 @@ class _MealDetailsState extends State<MealDetails> {
               Container(
                 margin: EdgeInsets.symmetric(vertical: 20),
                 width: width,
-                height: 40,
+                height: selectingContainer,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: meal.selectionList().length,
                   itemBuilder: (context, index) {
                     const margin = 15;
-                    return GestureDetector(
-                      child: AnimatedContainer(
-                        duration: Duration(milliseconds: 300),
-                        margin:
-                            EdgeInsets.symmetric(horizontal: margin.toDouble()),
-                        width:
-                            (width / meal.selectionList().length) - margin * 2,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(15),
-                            ),
-                            color: tabIndex == index + 1 ? Colors.grey : null),
-                        child: Center(
-                          child: FittedBox(
-                            fit: BoxFit.contain,
-                            child: Text(
-                              '${meal.selectionList()[index].toString()}',
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w900,
-                                  color: tabIndex == index + 1
-                                      ? Colors.black
-                                      : Colors.white),
-                            ),
+                    if (meal.runtimeType.toString() != 'Toast') {
+                      print(meal.runtimeType.toString());
+                      return firstSelection(margin, width, index);
+                    } else {
+                      return Column(
+                        children: [
+                          firstSelection(margin, width, index),
+                          SizedBox(
+                            height: 15,
                           ),
-                        ),
-                      ),
-                      onTap: () => selectTab(index + 1),
-                    );
+                          GestureDetector(
+                            child: AnimatedContainer(
+                              duration: Duration(milliseconds: 300),
+                              margin: EdgeInsets.symmetric(
+                                  horizontal: margin.toDouble()),
+                              width: (width / meal.subSelection().length) -
+                                  margin * 2,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(15),
+                                  ),
+                                  color: tabIndex2 == index + 1
+                                      ? Colors.grey
+                                      : null),
+                              child: Center(
+                                child: FittedBox(
+                                  fit: BoxFit.contain,
+                                  child: Text(
+                                    '${meal.subSelection()[index].toString()}',
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w900,
+                                        color: tabIndex2 == index + 1
+                                            ? Colors.black
+                                            : Colors.white),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            onTap: () => secondSelection(index + 1),
+                          ),
+                        ],
+                      );
+                    }
                   },
+                ),
+              ),
+              Expanded(
+                child: Container(
+                  color: Colors.white,
+                  child: ListView.builder(
+                    itemCount: meal.addons.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        leading: Text(
+                          '${meal.addons[index].addonName}',
+                          style: TextStyle(color: Colors.red),
+                        ),
+                        trailing: Checkbox(
+                          onChanged: (_) {},
+                          value: meal.addons[index].addonSelected,
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ),
               ElevatedButton(
@@ -123,6 +167,34 @@ class _MealDetailsState extends State<MealDetails> {
           ),
         ),
       ),
+    );
+  }
+
+  GestureDetector firstSelection(int margin, double width, int index) {
+    return GestureDetector(
+      child: AnimatedContainer(
+        duration: Duration(milliseconds: 300),
+        margin: EdgeInsets.symmetric(horizontal: margin.toDouble()),
+        width: (width / meal.selectionList().length) - margin * 2,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(
+              Radius.circular(15),
+            ),
+            color: tabIndex == index + 1 ? Colors.grey : null),
+        child: Center(
+          child: FittedBox(
+            fit: BoxFit.contain,
+            child: Text(
+              '${meal.selectionList()[index].toString()}',
+              style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w900,
+                  color: tabIndex == index + 1 ? Colors.black : Colors.white),
+            ),
+          ),
+        ),
+      ),
+      onTap: () => selectTab(index + 1),
     );
   }
 }

@@ -1,14 +1,20 @@
-import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 
 abstract class Meal {
   late GlobalKey id;
   late String name;
-  late List<Addons> addons;
+  late List<Addons> addons = [
+    Addons('סלט'),
+    Addons('מלפפון חמוץ'),
+    Addons('כרוב רבן'),
+    Addons('קרוב אדום'),
+    Addons('בצל'),
+    Addons('חסה')
+  ];
   double? price;
 
   selectionList();
+  subSelection();
 
   Meal() {
     id = new GlobalKey();
@@ -31,7 +37,7 @@ class Addons {
     this._name = name;
   }
 
-  set selected(bool select) {
+  void setSelected(bool select) {
     this._checked = select;
   }
 
