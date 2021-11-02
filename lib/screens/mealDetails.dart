@@ -21,7 +21,8 @@ class _MealDetailsState extends State<MealDetails> {
   int tabIndex2 = 1;
   double selectingContainer = 40;
   String _cartTag = "";
-  late Meal meal;
+  late dynamic meal;
+  dynamic mealTest;
 
   void selectTab(int selected) {
     tabIndex = selected;
@@ -42,6 +43,7 @@ class _MealDetailsState extends State<MealDetails> {
   void initState() {
     super.initState();
     meal = getMeal();
+    Provider.of<MealController>(context, listen: false).meal = meal;
     if (meal.runtimeType.toString() == 'Toast') {
       setState(() {
         selectingContainer = 90;
@@ -52,6 +54,7 @@ class _MealDetailsState extends State<MealDetails> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
+    dynamic mealTest = Provider.of<MealController>(context, listen: true).meal;
     return Scaffold(
       backgroundColor: Colors.black,
       body: SafeArea(
@@ -78,7 +81,6 @@ class _MealDetailsState extends State<MealDetails> {
                   itemBuilder: (context, index) {
                     const margin = 15;
                     if (meal.runtimeType.toString() != 'Toast') {
-                      print(meal.runtimeType.toString());
                       return firstSelection(margin, width, index);
                     } else {
                       return Column(
@@ -131,13 +133,24 @@ class _MealDetailsState extends State<MealDetails> {
                     itemCount: meal.addons.length,
                     itemBuilder: (context, index) {
                       return ListTile(
-                        leading: Text(
-                          '${meal.addons[index].addonName}',
-                          style: TextStyle(color: Colors.red),
+                        trailing: Text(
+                          '${Provider.of<MealController>(context, listen: false).meal.addons[index].addonName}',
+                          style: TextStyle(color: Colors.red, fontSize: 30),
                         ),
-                        trailing: Checkbox(
-                          onChanged: (_) {},
-                          value: meal.addons[index].addonSelected,
+                        leading: Checkbox(
+                          onChanged: (val) {
+                            Provider.of<MealController>(context, listen: false)
+                                .handleAddonSelection(
+                                    Provider.of<MealController>(context,
+                                            listen: false)
+                                        .meal,
+                                    index);
+                          },
+                          value:
+                              Provider.of<MealController>(context, listen: true)
+                                  .meal
+                                  .addons[index]
+                                  .addonSelected,
                         ),
                       );
                     },
@@ -145,7 +158,10 @@ class _MealDetailsState extends State<MealDetails> {
                 ),
               ),
               ElevatedButton(
-                child: Text('Add To Cart'),
+                child: Icon(
+                  Icons.add_shopping_cart_rounded,
+                  size: 40,
+                ),
                 onPressed: () {
                   Provider.of<CartController>(context, listen: false).addMeal(
                     new Cart(

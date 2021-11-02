@@ -6,6 +6,8 @@ class Burger extends Meal {
 
   get cheeseAddon => this._cheese;
 
+  Burger(String name) : super(name);
+
   @override
   selectionList() {
     return _gram;

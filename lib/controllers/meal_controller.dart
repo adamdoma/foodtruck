@@ -7,32 +7,34 @@ import 'package:foodtruck/classes/meal.dart';
 import 'package:foodtruck/classes/toast.dart';
 
 class MealController extends ChangeNotifier {
-  String _getName(String name) {
+  late dynamic meal;
+
+  String getName(String name) {
     name = name.substring(13, name.length - 7);
     return name;
   }
 
   Meal returnType(String name) {
-    switch (_getName(name)) {
+    switch (getName(name)) {
       case "burger":
         {
-          return new Burger();
+          return new Burger(name);
         }
       case "chicken":
         {
-          return new Chicken();
+          return new Chicken(name);
         }
       case "kebab":
         {
-          return new Kebab();
+          return new Kebab(name);
         }
       case "toast":
         {
-          return new Toast();
+          return new Toast(name);
         }
       case "hotdog":
         {
-          return new HotDog();
+          return new HotDog(name);
         }
       default:
         {
@@ -41,7 +43,7 @@ class MealController extends ChangeNotifier {
     }
   }
 
-  void handleAddonSelection(Meal meal, int index) {
+  void handleAddonSelection(dynamic meal, int index) {
     meal.addons[index].setSelected(!meal.addons[index].addonSelected);
     notifyListeners();
   }

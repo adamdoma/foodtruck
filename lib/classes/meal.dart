@@ -16,8 +16,9 @@ abstract class Meal {
   selectionList();
   subSelection();
 
-  Meal() {
+  Meal(String name) {
     id = new GlobalKey();
+    this.name = name;
   }
 
   GlobalKey getTagName() {
