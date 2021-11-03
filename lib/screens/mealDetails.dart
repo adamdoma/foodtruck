@@ -29,7 +29,7 @@ class _MealDetailsState extends State<MealDetails> {
     setState(() {});
   }
 
-  void secondSelection(int selected) {
+  void secondTabSelection(int selected) {
     tabIndex2 = selected;
     setState(() {});
   }
@@ -54,7 +54,6 @@ class _MealDetailsState extends State<MealDetails> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    dynamic mealTest = Provider.of<MealController>(context, listen: true).meal;
     return Scaffold(
       backgroundColor: Colors.black,
       body: SafeArea(
@@ -89,37 +88,7 @@ class _MealDetailsState extends State<MealDetails> {
                           SizedBox(
                             height: 15,
                           ),
-                          GestureDetector(
-                            child: AnimatedContainer(
-                              duration: Duration(milliseconds: 300),
-                              margin: EdgeInsets.symmetric(
-                                  horizontal: margin.toDouble()),
-                              width: (width / meal.subSelection().length) -
-                                  margin * 2,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(15),
-                                  ),
-                                  color: tabIndex2 == index + 1
-                                      ? Colors.grey
-                                      : null),
-                              child: Center(
-                                child: FittedBox(
-                                  fit: BoxFit.contain,
-                                  child: Text(
-                                    '${meal.subSelection()[index].toString()}',
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w900,
-                                        color: tabIndex2 == index + 1
-                                            ? Colors.black
-                                            : Colors.white),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            onTap: () => secondSelection(index + 1),
-                          ),
+                          secondSelection(margin, width, index),
                         ],
                       );
                     }
@@ -186,6 +155,34 @@ class _MealDetailsState extends State<MealDetails> {
     );
   }
 
+  GestureDetector secondSelection(int margin, double width, int index) {
+    return GestureDetector(
+      child: AnimatedContainer(
+        duration: Duration(milliseconds: 300),
+        margin: EdgeInsets.symmetric(horizontal: margin.toDouble()),
+        width: (width / meal.subSelection().length) - margin * 2,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(
+              Radius.circular(15),
+            ),
+            color: tabIndex2 == index + 1 ? Colors.grey : null),
+        child: Center(
+          child: FittedBox(
+            fit: BoxFit.contain,
+            child: Text(
+              '${meal.subSelection()[index].toString()}',
+              style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w900,
+                  color: tabIndex2 == index + 1 ? Colors.black : Colors.white),
+            ),
+          ),
+        ),
+      ),
+      onTap: () => secondTabSelection(index + 1),
+    );
+  }
+
   GestureDetector firstSelection(int margin, double width, int index) {
     return GestureDetector(
       child: AnimatedContainer(
@@ -214,46 +211,3 @@ class _MealDetailsState extends State<MealDetails> {
     );
   }
 }
-
-// GestureDetector(
-//   child: AnimatedContainer(
-//     duration: Duration(milliseconds: 300),
-//     width: tabIndex == 1 ? width / 2 : width / 4,
-//     decoration: BoxDecoration(
-//         color: Colors.grey),
-//     child: Icon(
-//       Icons.info,
-//       color: tabIndex == 1 ? Colors.red : Colors.white,
-//     ),
-//   ),
-//   onTap: () => selectTab(index),
-// ),
-// GestureDetector(
-//   child: AnimatedContainer(
-//     duration: Duration(milliseconds: 300),
-//     width: tabIndex == 2 ? width / 2 : width / 4,
-//     decoration: BoxDecoration(
-//       color: Colors.grey,
-//       border: Border.all(width: 2, color: Colors.white),
-//     ),
-//     child: Icon(Icons.ac_unit,
-//         color: tabIndex == 2 ? Colors.red : Colors.white),
-//   ),
-//   onTap: () => selectTab(2),
-// ),
-// GestureDetector(
-//   child: AnimatedContainer(
-//     duration: Duration(milliseconds: 300),
-//     width: tabIndex == 3 ? width / 2 : width / 4,
-//     decoration: BoxDecoration(
-//         border: Border.all(width: 2, color: Colors.white),
-//         borderRadius: BorderRadius.only(
-//           topRight: Radius.circular(30),
-//           bottomRight: Radius.circular(30),
-//         ),
-//         color: Colors.grey),
-//     child: Icon(Icons.access_time,
-//         color: tabIndex == 3 ? Colors.red : Colors.white),
-//   ),
-//   onTap: () => selectTab(3),
-// )
