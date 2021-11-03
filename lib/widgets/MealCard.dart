@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:foodtruck/controllers/cart_controller.dart';
 import 'package:foodtruck/test/widget_test.dart';
-import 'package:provider/provider.dart';
+import 'package:foodtruck/widgets/image_presntation_widget.dart';
 
 class MealCard extends StatelessWidget {
   final int index;
@@ -38,24 +37,7 @@ class MealCard extends StatelessWidget {
             bottom: index.isOdd ? 20 : 20,
             child: Hero(
               tag: '${demoMeals[index]}',
-              child: Container(
-                height: 50,
-                width: 50,
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                        color: Colors.white,
-                        blurRadius: 20,
-                        offset: Offset(5, 5))
-                  ],
-                  border: Border.all(color: Colors.transparent, width: 2),
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                    fit: BoxFit.fill,
-                    image: AssetImage(demoMeals[index].toString()),
-                  ),
-                ),
-              ),
+              child: ImagePresntation(index: index),
             ),
           ),
           Positioned(

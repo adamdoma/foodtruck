@@ -15,4 +15,10 @@ class Toast extends Meal {
   subSelection() {
     return _typeOfMeat;
   }
+
+  @override
+  calculatePrice() {
+    // TODO: implement calculatePrice
+    throw UnimplementedError();
+  }
 }

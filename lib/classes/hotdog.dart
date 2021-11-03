@@ -15,4 +15,10 @@ class HotDog extends Meal {
     // TODO: implement subSelection
     throw UnimplementedError();
   }
+
+  @override
+  calculatePrice() {
+    // TODO: implement calculatePrice
+    throw UnimplementedError();
+  }
 }

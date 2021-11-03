@@ -4,6 +4,7 @@ import 'package:foodtruck/classes/chicken.dart';
 import 'package:foodtruck/classes/hotdog.dart';
 import 'package:foodtruck/classes/kebab.dart';
 import 'package:foodtruck/classes/meal.dart';
+import 'package:foodtruck/classes/salads.dart';
 import 'package:foodtruck/classes/toast.dart';
 
 class MealController extends ChangeNotifier {
@@ -36,8 +37,15 @@ class MealController extends ChangeNotifier {
         {
           return new HotDog(name);
         }
+      case "salads":
+        {
+          return new Salads(name);
+        }
       default:
         {
+          print("----------------------------------------------");
+          print('mealController type class error');
+          print("----------------------------------------------");
           throw Error();
         }
     }

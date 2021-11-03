@@ -15,6 +15,7 @@ abstract class Meal {
 
   selectionList();
   subSelection();
+  calculatePrice();
 
   Meal(String name) {
     id = new GlobalKey();

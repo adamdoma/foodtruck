@@ -4,6 +4,7 @@ import 'package:foodtruck/classes/meal.dart';
 import 'package:foodtruck/controllers/cart_controller.dart';
 import 'package:foodtruck/controllers/meal_controller.dart';
 import 'package:foodtruck/test/widget_test.dart';
+import 'package:foodtruck/widgets/image_presntation_widget.dart';
 import 'package:provider/provider.dart';
 
 import '../classes/cart.dart';
@@ -61,71 +62,89 @@ class _MealDetailsState extends State<MealDetails> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Container(
-                child: Hero(
-                  tag: _cartTag == "" ? demoMeals[widget.mealIndex] : _cartTag,
-                  child: CircleAvatar(
-                    radius: 100,
-                    backgroundImage: AssetImage(demoMeals[widget.mealIndex]),
+              Expanded(
+                flex: 2,
+                child: Container(
+                  child: Hero(
+                    tag:
+                        _cartTag == "" ? demoMeals[widget.mealIndex] : _cartTag,
+                    child: ImagePresntation(
+                      index: widget.mealIndex,
+                    ),
                   ),
                 ),
               ),
-              Container(
-                margin: EdgeInsets.symmetric(vertical: 20),
-                width: width,
-                height: selectingContainer,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: meal.selectionList().length,
-                  itemBuilder: (context, index) {
-                    const margin = 15;
-                    if (meal.runtimeType.toString() != 'Toast') {
-                      return firstSelection(margin, width, index);
-                    } else {
-                      return Column(
-                        children: [
-                          firstSelection(margin, width, index),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          secondSelection(margin, width, index),
-                        ],
-                      );
-                    }
-                  },
-                ),
-              ),
               Expanded(
+                flex: 1,
                 child: Container(
-                  color: Colors.white,
+                  margin: EdgeInsets.symmetric(vertical: 20),
+                  width: width,
+                  height: selectingContainer,
                   child: ListView.builder(
-                    itemCount: meal.addons.length,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: meal.selectionList().length,
                     itemBuilder: (context, index) {
-                      return ListTile(
-                        trailing: Text(
-                          '${Provider.of<MealController>(context, listen: false).meal.addons[index].addonName}',
-                          style: TextStyle(color: Colors.red, fontSize: 30),
-                        ),
-                        leading: Checkbox(
-                          onChanged: (val) {
-                            Provider.of<MealController>(context, listen: false)
-                                .handleAddonSelection(
-                                    Provider.of<MealController>(context,
-                                            listen: false)
-                                        .meal,
-                                    index);
-                          },
-                          value:
-                              Provider.of<MealController>(context, listen: true)
-                                  .meal
-                                  .addons[index]
-                                  .addonSelected,
-                        ),
-                      );
+                      const margin = 15;
+                      if (meal.runtimeType.toString() == 'Toast') {
+                        return Column(
+                          children: [
+                            firstSelection(margin, width, index),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            secondSelection(margin, width, index),
+                          ],
+                        );
+                      } else {
+                        return firstSelection(margin, width, index);
+                      }
                     },
                   ),
                 ),
               ),
+              meal.runtimeType.toString() != 'Salads'
+                  ? Expanded(
+                      flex: 3,
+                      child: Container(
+                        color: Colors.black,
+                        child: ListView.builder(
+                          itemCount: meal.addons.length,
+                          itemBuilder: (context, index) {
+                            return ListTile(
+                              dense: true,
+                              contentPadding:
+                                  EdgeInsets.symmetric(horizontal: width / 8),
+                              trailing: Text(
+                                '${Provider.of<MealController>(context, listen: false).meal.addons[index].addonName}',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 30),
+                              ),
+                              leading: Checkbox(
+                                checkColor: Colors.black,
+                                focusColor: Colors.amberAccent,
+                                fillColor: MaterialStateColor.resolveWith(
+                                    (states) => Colors.white),
+                                onChanged: (val) {
+                                  Provider.of<MealController>(context,
+                                          listen: false)
+                                      .handleAddonSelection(
+                                          Provider.of<MealController>(context,
+                                                  listen: false)
+                                              .meal,
+                                          index);
+                                },
+                                value: Provider.of<MealController>(context,
+                                        listen: true)
+                                    .meal
+                                    .addons[index]
+                                    .addonSelected,
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    )
+                  : Container(),
               ElevatedButton(
                 child: Icon(
                   Icons.add_shopping_cart_rounded,
